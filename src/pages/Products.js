@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 import { productsPagination } from "../services/products";
 import ReactPaginate from "react-paginate";
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 import { categoriesAll } from "../services/categories";
 import Product from "../components/Product";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 function Products() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [filter, setFilter] = useState('');
+    const [filter, setFilter] = useState('All');
 
     const limit = 25;
     useEffect(() =>{
@@ -33,27 +42,50 @@ function Products() {
         getProducts(selected * 25)
     }
 
-    const productsFilter = (filter === '') ? products : products.filter(({category}) => category.name === filter)
+    const productsFilter = (filter === 'All') ? products : products.filter(({category}) => category.name === filter)
     return (
         <>
-          <h1>Products</h1>
-          <h2>Cantidad: {productsFilter.length}</h2>
-          {
-            categories.map((category) => <button key={category.id} onClick={(e) => productsByCategory(category.name)}>{category.name}</button>)
-          }
-          <button onClick={(e) => productsByCategory('')}>All</button>
-          {
-            productsFilter.map((product) => <Product key={product.id} product={product} />)
-          }
-
+          <FormControl sx={{p:2}}>
+            <FormLabel id="category-buttons-group-label">Categories </FormLabel>
+            <FormLabel id="amount-label" sx={{position:'absolute', left:'8rem'}}>Amount: {productsFilter.length}</FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="category-buttons-group-label"
+              name="category-buttons-group"
+              defaultValue="All"
+              onChange={({target}) => productsByCategory(target.value)}
+            >
+              {
+                categories.map((category) => <FormControlLabel key={category.id} value={category.name} control={<Radio />} label={category.name} />)
+              }
+              <FormControlLabel
+              value="All"
+              control={<Radio />}
+              label="All"
+            />
+            </RadioGroup>
+          </FormControl>
+         
+          <Container maxWidth="xl" >
+            <Grid container  sx={{display: 'flex', justifyContent:"center"}}>
+            {
+              productsFilter.map((product) => <Product key={product.id} product={product} />)
+            }
+            </Grid>
+          </Container>
           <ReactPaginate 
-            previousLabel={'previous'}
-            nextLabel={'next'}
+            previousLabel={<ArrowBackIosIcon  sx={{ fontSize: '1rem' }} />}
+            nextLabel={<ArrowForwardIosIcon  sx={{ fontSize: '1rem' }}  />}
             breakLabel={'...'}
             marginPagesDisplayed={3}
             pageRangeDisplayed={2}
             pageCount={8}
             onPageChange={handlePageClick}
+            className='pagination'
+            pageClassName='pagination-li'
+            activeClassName='pagination-active'
+            previousClassName='pagination-li'
+            nextClassName='pagination-li'
           />
         </>
     )

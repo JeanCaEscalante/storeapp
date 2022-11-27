@@ -2,14 +2,14 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-
+import Paper from '@mui/material/Paper';
 function Category({category}) {
 
     return (
-        <Card sx={{ maxWidth: 400, borderRadius: 0, border:0.5, display: 'flex', justifyContent:"center", alignItems:'end' }}>
+        <Card sx={{ maxWidth: 370, borderRadius: 0, display: 'flex', justifyContent:"center", alignItems:'center' }}>
          <CardMedia
            component="img"
-           height="250"
+           height="200"
            image={category.image}
            alt={category.name}
          />
@@ -18,7 +18,7 @@ function Category({category}) {
            sx={{
             position: 'absolute',
             borderRadius: 0,
-            margin: 1
+            margin: '1px'
            }}
            >{category.name}</Button>
        </Card>

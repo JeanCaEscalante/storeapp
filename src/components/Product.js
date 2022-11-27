@@ -1,14 +1,54 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+
 function Product({product}) {
 
     return (
-        <div>
-            <img src={product.images[0]} alt="imagen de producto" width="100" height="100"/>
-            <Link to={`${product.id}`}><h3>{product.title}</h3></Link>
-            <h3>{product.price}</h3>
-            <p>{product.description}</p>
-        </div>
+        <Card 
+         sx={{ maxWidth: 225,
+               maxHeight: 315, 
+               borderRadius:'0px',
+               margin: 1 }}>
+            <CardMedia
+            component="img"
+            height="224"
+            image={product.images[0]}
+            alt={product.title}
+            />
+            <CardContent>
+            <Typography gutterBottom variant="h6" component="h4"
+                sx={{
+                fontWeight:600,
+                textAlign:'center',
+                fontSize:'0.9rem'
+                }}
+            >
+                {product.title}
+            </Typography>
+            
+            <Box
+            sx={{
+                textAlign:'center'
+            }}>
+                <Typography variant="body2" component="span" color="text.secondary"
+                sx={{
+                    letterSpacing:1,
+                    fontSize:'0.9em',
+                    fontWeight:600,
+                    color:'#000'
+                }}
+                >
+                ${product.price}
+                </Typography>
+            </Box>
+            </CardContent>
+      </Card>
     )
 }
 
