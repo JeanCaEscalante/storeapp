@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 
-function Banners({post= '', image, height=360}) {
+function Banners({post= '', image, height=360, position='center', size='cover'}) {
 
     return (
         <Paper
@@ -15,9 +15,9 @@ function Banners({post= '', image, height=360}) {
           backgroundColor: 'grey.800',
           color: '#fff',
           mb: 4,
-          backgroundSize: 'cover',
+          backgroundSize: size,
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'center',
+          backgroundPosition: position,
           backgroundImage: `url(${image})`,
           borderRadius:0,
           minHeight: height

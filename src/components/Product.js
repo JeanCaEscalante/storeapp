@@ -21,12 +21,13 @@ function Product({product}) {
             image={product.images[0]}
             alt={product.title}
             />
-            <CardContent>
-            <Typography gutterBottom variant="h6" component="h4"
+            <CardContent sx={{textAlign:'center'}}>
+            <Typography component={Link} to={`${product.id}`} gutterBottom variant="h6" 
                 sx={{
                 fontWeight:600,
-                textAlign:'center',
-                fontSize:'0.9rem'
+                fontSize:'0.9rem',
+                textDecoration:'none',
+                color:'#000'
                 }}
             >
                 {product.title}

@@ -1,8 +1,8 @@
-import { createContext, useState } from "react";
+import React, {createContext, useState} from "react";
 import { authLogin, authProfile } from "../services/authentication";
 
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [isAuth, setIsAuth] = useState(sessionStorage.getItem('token'));
