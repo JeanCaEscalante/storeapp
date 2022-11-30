@@ -1,27 +1,60 @@
-import React, {createContext, useState} from "react";
+import Context from "@mui/base/TabsUnstyled/TabsContext";
+import React, {createContext, useState, useEffect, useMemo, useContext} from "react";
 import { authLogin, authProfile } from "../services/authentication";
 
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
-    const [isAuth, setIsAuth] = useState(sessionStorage.getItem('token'));
+export const AuthProvider = ({props}) => {
+    const [isAuth, setIsAuth] = useState(false);
+    const [user,setUser] = useState(null);
+
+    useEffect(() => {
+        const loggedUserJSON = window.sessionStorage.getItem('token');
+        if (loggedUserJSON) {
+          AuthProfile(loggedUserJSON)
+          setIsAuth(true)
+        };
+      }, []);
 
     const AuthProfile = async (token) => {
-        return await authProfile(token)
+        const logged = await authProfile(token)
+        setUser(logged);
     }
 
     const AuthLogin = async (object) => {
-        const token = await authLogin(object);
-
-        if(token){
-            sessionStorage.setItem('token', token)
+        try {
+            const token = await authLogin(object);
+            AuthProfile(token)
+            setIsAuth(true)
+        } catch (error) {
+            console.log(error)
         }
-        else {
-            token
-        }
-
-       return token ? sessionStorage.setItem('token', token) : token
-
     }
+
+    const AuthLogout = () => {
+        setUser(null)
+        setIsAuth(false)
+        window.sessionStorage.removeItem('token')
+    }
+
+    const value = useMemo(() => {
+        return ({
+            isAuth,
+            user,
+            AuthLogin,
+            AuthLogout
+        })
+    },[isAuth,user])
+
+    return <AuthContext.Provider value={value} {...props}/>
 } 
+
+export const useUser = () => {
+    const context = useContext(AuthContext);
+    if(!contex){
+        throw new Error('useUser not contain AuthContext')
+    }
+
+    return context;
+}
