@@ -1,21 +1,21 @@
 import { useState } from "react";
 import toast, { Toaster } from 'react-hot-toast';
-import { authLogin } from "../services/authentication";
-import { Link } from "react-router-dom";
+
+import { useUser } from "../contexts/authContext";
 
 function Login() {
 
     const [email, setEmail] = useState('john@mail.com');
     const [password, setPassword] = useState('changeme');
-
-    const session = async (object) => await await authLogin(object)
+    const {AuthLogin, isAuth} = useUser();
+    const session = async (object) => await AuthLogin(object)
 
     const heanledSubmit =  (e) => {
         e.preventDefault();
       
         toast.promise(session({email,password}), {
             loading: 'Loading',
-            success: ({access_token}) => `Successfully ${access_token}`,
+            success: 'Binvenido',
             error: (err) => `This just happened: ${err.toString()}`,
           });
     }

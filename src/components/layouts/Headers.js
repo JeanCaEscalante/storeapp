@@ -19,9 +19,11 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../contexts/authContext';
 
 const pages = ['products', 'pricing', 'blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -67,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 function Headers() {
   const [anchorElNav, setAnchorElNav] = React.useState('none');
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const {user, AuthLogout} = useUser();
 
   const handleOpenNavMenu = () => {
     
@@ -170,10 +173,11 @@ function Headers() {
               </Badge>
             </IconButton>
           </Box>
+          {!!user ?
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src={user.avatar} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -198,7 +202,8 @@ function Headers() {
                 </MenuItem>
               ))}
             </Menu>
-          </Box>
+          </Box> : <Button component={Link} to='/login' color="inherit">Login</Button>
+          }
         </Toolbar>
         <Toolbar disableGutters  sx={{ display: { xs: anchorElNav, md: 'flex' }, minHeight:'48px!important' }}>
           <Box justifyContent="center" sx={{ flexGrow: 1, display: { xs: anchorElNav, md: 'flex' }, height:'48px'}}>

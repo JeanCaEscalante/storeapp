@@ -1,20 +1,19 @@
-import Context from "@mui/base/TabsUnstyled/TabsContext";
 import React, {createContext, useState, useEffect, useMemo, useContext} from "react";
 import { authLogin, authProfile } from "../services/authentication";
-
-
+import { useNavigate } from "react-router-dom";
 const AuthContext = createContext();
 
-export const AuthProvider = ({props}) => {
+export const AuthProvider = ({children}) => {
     const [isAuth, setIsAuth] = useState(false);
     const [user,setUser] = useState(null);
-
+    const navigate = useNavigate()
     useEffect(() => {
-        const loggedUserJSON = window.sessionStorage.getItem('token');
+        const loggedUserJSON = localStorage.getItem('token');
         if (loggedUserJSON) {
           AuthProfile(loggedUserJSON)
           setIsAuth(true)
-        };
+          navigate('/')
+        }
       }, []);
 
     const AuthProfile = async (token) => {
@@ -24,9 +23,10 @@ export const AuthProvider = ({props}) => {
 
     const AuthLogin = async (object) => {
         try {
-            const token = await authLogin(object);
-            AuthProfile(token)
+            const {access_token} = await authLogin(object);
+            AuthProfile(access_token)
             setIsAuth(true)
+            navigate('/')
         } catch (error) {
             console.log(error)
         }
@@ -35,7 +35,7 @@ export const AuthProvider = ({props}) => {
     const AuthLogout = () => {
         setUser(null)
         setIsAuth(false)
-        window.sessionStorage.removeItem('token')
+        localStorage.removeItem('token')
     }
 
     const value = useMemo(() => {
@@ -47,12 +47,12 @@ export const AuthProvider = ({props}) => {
         })
     },[isAuth,user])
 
-    return <AuthContext.Provider value={value} {...props}/>
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 } 
 
 export const useUser = () => {
     const context = useContext(AuthContext);
-    if(!contex){
+    if(!context){
         throw new Error('useUser not contain AuthContext')
     }
 
