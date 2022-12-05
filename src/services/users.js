@@ -1,24 +1,33 @@
-import request from "./config";
+import request from './config';
 
-
-const url =  'users';
+const url = 'users';
 
 export const usersAll = async () => {
-  return await request.get(url)
-}
+  const { data } = await request.get(url);
+  return data;
+};
 
 export const userById = async (id) => {
-  return await request.get(`${url}/${id}`)
-}
+  const { data } = await request.get(`${url}/${id}`);
+  return data;
+};
 
 export const userCreate = async (object) => {
-  return await request.post(url, object)
-}
+  const { data } = await request.post(url, object);
+  return data;
+};
 
-export const userUpdate = async (id,object) => {
-  return await request.put(url)
-}
+export const userUpdate = async (id, object) => {
+  const { data } = await await request.put(id, object);
+  return data;
+};
 
 export const userRemove = async (id) => {
-  return await request.delete(`${url}/${id}`)
-}
+  const { data } = await request.delete(`${url}/${id}`);
+  return data;
+};
+
+export const productsPagination = async (previous, limit) => {
+  const { data } = await request.get(`${url}?offset=${previous}&limit=${limit}`);
+  return data;
+};

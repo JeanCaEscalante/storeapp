@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -23,7 +23,6 @@ import { useUser } from '../../contexts/authContext';
 
 const pages = ['products', 'pricing', 'blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -65,14 +64,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
 function Headers() {
   const [anchorElNav, setAnchorElNav] = React.useState('none');
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {user, AuthLogout} = useUser();
+  const { user, AuthLogout } = useUser();
 
   const handleOpenNavMenu = () => {
-    
     setAnchorElNav((anchorElNav === 'none') ? 'flex' : 'none');
   };
   const handleOpenUserMenu = (event) => {

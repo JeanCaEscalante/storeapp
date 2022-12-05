@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import CssBaseline from '@mui/material/CssBaseline';
-import "@fontsource/lato"
-import '@fontsource/lato/400.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import App from './App';
+import '@fontsource/lato';
+import '@fontsource/lato/400.css';
 
-export const themeOptions = {
+const themeOptions = {
   palette: {
     type: 'light',
     primary: {
@@ -43,7 +43,5 @@ root.render(
       <CssBaseline />
       <App />
     </ThemeProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
-
-
