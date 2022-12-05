@@ -109,7 +109,7 @@ function Offer({ offer }) {
 Offer.propTypes = {
   offer: PropTypes.shape({
     title: PropTypes.string,
-    images: PropTypes.arrayOf,
+    images: PropTypes.arrayOf(PropTypes.string),
     price: PropTypes.number,
   }).isRequired,
 };

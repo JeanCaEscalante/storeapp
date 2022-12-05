@@ -7,7 +7,9 @@ export const authLogin = async (object) => {
 
 export const authProfile = async (token) => {
   const config = {
-    headers: `bearer ${token}`,
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
   };
 
   const { data } = await request.get('auth/profile', config);

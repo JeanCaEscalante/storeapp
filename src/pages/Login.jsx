@@ -8,12 +8,10 @@ function Login() {
   const [password, setPassword] = useState('changeme');
   const { AuthLogin } = useUser();
 
-  const session = (object) => AuthLogin(object);
-
   const heanledSubmit = (e) => {
     e.preventDefault();
 
-    toast.promise(session({ email, password }), {
+    toast.promise(AuthLogin({ email, password }), {
       loading: 'Loading',
       success: 'Binvenido',
       error: (err) => `This just happened: ${err.toString()}`,

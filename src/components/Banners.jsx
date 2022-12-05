@@ -71,7 +71,7 @@ Banners.propTypes = {
     description: PropTypes.string,
     linkText: PropTypes.string,
   }),
-  image: PropTypes.element.isRequired,
+  image: PropTypes.string.isRequired,
   height: PropTypes.number,
   position: PropTypes.string,
   size: PropTypes.string,
